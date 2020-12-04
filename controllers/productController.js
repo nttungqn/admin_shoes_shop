@@ -141,3 +141,39 @@ module.exports.getProductById = (id) => {
 			.catch((err) => reject(new Error(err)));
 	});
 };
+
+module.export.getAllProducts = catchAsync(async(req, res) => {
+	const products = await Product.find();
+	res.status(200).json({record: products});
+})
+
+module.export.getProduct = catchAsync(async (req, res, next) => {
+	const product = await Product.findOne({_id: req.params.id});
+	if(!product) {
+		next(new AppError(`No document found with that id`, 404))
+	}
+	res.status(200).json({record: product});
+})
+
+module.export.updateProduct = catchAsync(async(req, res, next) => {
+	const product = await Product.findByIdAndUpdate({_id: req.params.id}, req.body);
+	
+	if(!product) {
+		next(new AppError(`No document found with that id`, 404))
+	}
+	res.status(200).json({record: product});
+})
+
+module.exports.addProduct = catchAsync(async (req, res) => {
+	const product = await Product.create(req.body);
+	
+	res.status(201).json({record: product});
+})
+
+module.exports.deleteProduct = catchAsync(async(req, res) => {
+	const product = await Product.findByIdAndDelete(req.params.id);
+	if(!product) {
+		next(new AppError(`No document found with that id`, 404))
+	}
+	res.status(200).json({record: null});
+})

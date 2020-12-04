@@ -1,34 +1,28 @@
 {
-	"name": "shop",
-	"version": "1.0.0",
-	"description": "",
-	"main": "index.js",
-	"scripts": {
-		"start": "node server.js",
-		"test": "echo \"Error: no test specified\" && exit 1"
-	},
-	"author": "",
-	"license": "ISC",
-	"dependencies": {
-		"@handlebars/allow-prototype-access": "^1.0.3",
-		"axios": "^0.20.0",
-		"bcryptjs": "^2.4.3",
-		"body-parser": "^1.19.0",
-		"compression": "^1.7.4",
-		"cookie-parser": "^1.4.5",
-		"dotenv": "^8.2.0",
-		"express": "^4.17.1",
-		"express-handlebars": "^5.1.0",
-		"express-handlebars-paginate": "^1.0.3",
-		"express-session": "^1.17.1",
-		"mongoose": "^5.10.2",
-		"morgan": "^1.10.0",
-		"nodemon": "^2.0.4",
-		"passport": "^0.4.1",
-		"passport-local": "^1.0.0",
-		"pug": "^3.0.0",
-		"slugify": "^1.4.5",
-		"handlebars": "^4.7.6"
-	},
-	"devDependencies": {}
+  "name": "admin_shoes_shop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nttungqn/admin_shoes_shop.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nttungqn/admin_shoes_shop/issues"
+  },
+  "homepage": "https://github.com/nttungqn/admin_shoes_shop#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.11.3",
+    "morgan": "^1.10.0",
+    "path": "^0.12.7"
+  }
 }

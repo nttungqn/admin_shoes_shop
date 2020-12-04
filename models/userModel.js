@@ -20,6 +20,11 @@ const userSchema = new mongoose.Schema({
 		type: String,
 		require: [true, 'Please provide a password'],
 	},
+	role: {
+		type: Number,
+		// Admin: 1, User: 1
+		default: 0
+	}
 });
 
 const User = mongoose.model('User', userSchema, 'users');
