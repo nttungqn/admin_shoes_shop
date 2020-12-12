@@ -6,4 +6,6 @@ const router = express.Router();
 
 router.get('/', viewController.getDashboard)
 
+router.route('/products').get(viewController.getProductTable)
+
 module.exports = router;
