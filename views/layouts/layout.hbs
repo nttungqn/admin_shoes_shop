@@ -7,11 +7,14 @@
     <section class="body">
     {{> _header}}
 
+    <div class="inner-wrapper">
+    {{> sidebar-left}}
     {{{body}}}
-
+    </div>
+    {{> sidebar-right}}
     {{!-- {{> _footer}} --}}
-    {{> script}}
     </section>
+    {{> script}}
 </body>
 
 </html>
