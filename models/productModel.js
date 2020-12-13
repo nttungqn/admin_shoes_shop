@@ -1,6 +1,7 @@
-/** @format */
-
 const mongoose = require('mongoose');
+const Brand = require('./../models/brandModel')
+const Category = require('./../models/categoryModel')
+const Color = require('./../models/colorModel')
 
 const productSchema = new mongoose.Schema(
 	{
@@ -9,7 +10,7 @@ const productSchema = new mongoose.Schema(
 			trim: true,
 			text: true,
 			required: [true, 'A shoes must have a name'],
-			unique: true,
+			unique: false,
 			maxlength: [50, 'A shoes name must have less or equal than 50 characters'],
 			minlength: [3, 'A shoes name must have more or equal than 6 characters'],
 		},
@@ -41,19 +42,19 @@ const productSchema = new mongoose.Schema(
 			required: [true, 'A shoes must have a image cover'],
 		},
 		brandId: {
-			type: mongoose.Schema.Types.ObjectId,
+			type: Number,
 			ref: 'Brand',
 			required: [true, 'Product must belong to a brand'],
 		},
 		categoryId: {
-			type: mongoose.Schema.Types.ObjectId,
+			type: Number,
 			ref: 'Category',
 			required: [true, 'Product must belong to a category'],
 		},
 		colorId: [
 			{
-				type: mongoose.Schema.Types.ObjectId,
-				ref: 'Category',
+				type: Number,
+				ref: 'Color',
 				required: [true],
 			},
 		],
@@ -65,22 +66,22 @@ const productSchema = new mongoose.Schema(
 	}
 );
 
-productSchema.index({ name: 'text' });
-// productSchema.index({ '$**': 'text' });
+// productSchema.index({ name: 'text' });
+// // productSchema.index({ '$**': 'text' });
 
 productSchema.pre(/^find/, function (next) {
 	this.populate({
-		path: 'brand',
+		path: 'brandId',
 		select: 'name',
 	});
 
 	this.populate({
-		path: 'category:',
+		path: 'categoryId',
 		select: 'name',
 	});
 
 	this.populate({
-		path: 'color',
+		path: 'colorId',
 		select: 'name',
 	});
 

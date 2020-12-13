@@ -1,13 +1,12 @@
-/** @format */
-
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
 const userSchema = new mongoose.Schema({
-	fullname: {
+	name: {
 		type: String,
 		require: [true, 'Please provide a fullname'],
 	},
-	avatar: {
+	image: {
 		type: String,
 		default: 'avatar-1.png',
 	},
@@ -20,13 +19,21 @@ const userSchema = new mongoose.Schema({
 		type: String,
 		require: [true, 'Please provide a password'],
 	},
-	role: {
-		type: Number,
-		// Admin: 1, User: 1
-		default: 0
+	address: { 
+		type: String,
+		default: '225 Nguyen Van Cu Street',
+	},
+	salt: {
+		type: String
 	}
 });
 
+// gensalt
+userSchema.pre('save', async function(next) {
+	this.salt = await bcrypt.genSalt(10)
+	this.password = await bcrypt.hash(this.password, this.salt);
+	next();
+  });
 const User = mongoose.model('User', userSchema, 'users');
 
 module.exports = User;

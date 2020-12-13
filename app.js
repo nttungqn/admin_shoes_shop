@@ -3,6 +3,8 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const morgan = require('morgan');
 const expressHandlebars = require('express-handlebars');
+const Handlebars = require('handlebars');
+const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access')
 
 const viewRouter = require('./routes/viewRoutes')
 const AppError =require('./utils/AppError')
@@ -19,6 +21,7 @@ const hbs = expressHandlebars.create({
 	defaultLayout: 'layout',
 	layoutsDir: __dirname + '/views/layouts',
 	partialsDir: __dirname + '/views/partials',
+	handlebars: allowInsecurePrototypeAccess(Handlebars),
 });
 
 app.engine('hbs', hbs.engine);
