@@ -1,30 +1,37 @@
 const mongoose = require("mongoose");
+const dateFormat = require('dateformat');
+
 
 const commentSchema = new mongoose.Schema(
 	{
+		name: {
+			type: String,
+			required: true,
+		},
+		email: { 
+			type: String,
+			required: true,
+		},
 		message: {
 			type: String,
 			required: [true, "Comment not empty"],
-		},
-		userId: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "User",
-			required: [true, "Comment must belong ti a user"],
 		},
 		productId: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "Product",
 			required: [true, "Comment must belong a product"],
 		},
-		parentCommentId: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "Comment",
-			default: undefined,
-		},
 		createdAt: {
 			type: Date,
 			default: Date.now(),
 		},
+		avatar: {
+			type: String,
+			default: "avatar-default.png",
+		},
+		createdAtFormat: {
+			type: String,
+		}
 	},
 	{
 		toJSON: { virtuals: true },
@@ -32,20 +39,10 @@ const commentSchema = new mongoose.Schema(
 	}
 );
 
-commentSchema.pre(/^find/, function (next) {
-	this.populate({
-		path: 'userId',
-		select: 'fullname avatar',
-	});
-
-
-	this.populate({
-		path: 'parentCommentId',
-		select: 'message',
-	});
-
+commentSchema.pre('save', function (next) {
+	this.createdAtFormat = dateFormat(this.createdAt, "dS mmmm, yyyy, at h:MM TT");
 	next();
-});
+})
 
 const Comment = mongoose.model("Comment", commentSchema);
 

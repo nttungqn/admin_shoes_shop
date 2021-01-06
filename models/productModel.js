@@ -1,7 +1,6 @@
+/** @format */
+
 const mongoose = require('mongoose');
-const Brand = require('./../models/brandModel')
-const Category = require('./../models/categoryModel')
-const Color = require('./../models/colorModel')
 
 const productSchema = new mongoose.Schema(
 	{
@@ -54,7 +53,7 @@ const productSchema = new mongoose.Schema(
 		colorId: [
 			{
 				type: Number,
-				ref: 'Color',
+				ref: 'Category',
 				required: [true],
 			},
 		],
@@ -76,7 +75,7 @@ productSchema.pre(/^find/, function (next) {
 	});
 
 	this.populate({
-		path: 'categoryId',
+		path: 'categoryId:',
 		select: 'name',
 	});
 

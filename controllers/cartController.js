@@ -1,96 +1,81 @@
-'use strict';
+const productController = require('./productController');
+const Order = require('./../models/orderModel');
+const AppError = require('../utils/AppError');
 
-module.exports = function Cart(oldCart) {
-	this.items = oldCart.items || {};
-	this.totalQuantity = oldCart.totalQuantity || 0;
-	this.totalPrice = oldCart.totalPrice || 0;
-	this.address = oldCart.address || {};
-	this.paymentMethod = oldCart.paymentMethod || 'COD';
+module.exports.getCart = (req, res, next) => {
+	let cart = req.session.cart;
+	res.locals.cart = cart.getCart();
+	res.render('cart', {
+		bannerPage: 'Cart',
+		banner: 'Cart',
+		user: req.user
+	});
+}
 
-	this.getTotalQuantity = () => {
-		var quantity = 0;
-		for (var id in this.items) {
-			quantity += parseInt(this.items[id].quantity);
-		}
-		return quantity;
-	};
+module.exports.postCart = (req, res, next) => {
+	let productId = req.body.id;
+	console.log(productId);
+	let quantity = isNaN(req.body.quantity) ? 1 : req.body.quantity;
+	productController
+		.getProductById(productId)
+		.then((product) => {
+			let cartItem = req.session.cart.add(product, productId, quantity);
+			// console.log(cartItem);
+			res.json(cartItem);
+		})
+		.catch((err) => next(err));
+}
 
-	this.getTotalPrice = () => {
-		var price = 0;
-		for (var id in this.items) {
-			price += parseFloat(this.items[id].price);
-		}
-		price = parseFloat(price).toFixed(2);
-		return price;
-	};
+module.exports.putCart = (req, res, next) => {
+	let productId = req.body.id;
+	let quantity = parseInt(req.body.quantity);
+	let cartItem = req.session.cart.update(productId, quantity);
+	res.json(cartItem);
+}
 
-	this.add = (item, id, quantity) => {
-		var storedItem = this.items[id];
-		if (!storedItem) {
-			this.items[id] = { item: item, quantity: 0, price: 0 };
-			storedItem = this.items[id];
-		}
-		storedItem.item.price = parseFloat(storedItem.item.price);
-		storedItem.quantity += parseInt(quantity);
-		storedItem.price = parseFloat(storedItem.item.price * storedItem.quantity);
-		this.totalQuantity = this.getTotalQuantity();
-		this.totalPrice = this.getTotalPrice();
-		return this.getCartItem(id);
-	};
+module.exports.deleteCart = (req, res, next) => {
+	let productId = req.body.id;
+	req.session.cart.remove(productId);
+	res.json({
+		totalQuantity: req.session.cart.totalQuantity,
+		totalPrice: req.session.cart.totalPrice,
+	});
+}
 
-	this.remove = (id) => {
-		var storedItem = this.items[id];
-		if (storedItem) {
-			delete this.items[id];
-			this.totalQuantity = this.getTotalQuantity();
-			this.totalPrice = this.getTotalPrice();
-		}
-	};
-
-	this.update = (id, quantity) => {
-		var storedItem = this.items[id];
-		if (storedItem && quantity >= 1) {
-			storedItem.quantity = quantity;
-			storedItem.price = parseFloat(storedItem.item.price * storedItem.quantity);
-			this.totalQuantity = this.getTotalQuantity();
-			this.totalPrice = this.getTotalPrice();
-		}
-		return this.getCartItem(id);
-	};
-
-	this.empty = () => {
-		this.items = {};
-		this.totalQuantity = 0;
-		this.totalPrice = 0;
-	};
-
-	this.generateArray = () => {
-		var arr = [];
-		for (var id in this.items) {
-			this.items[id].item.price = parseFloat(this.items[id].item.price).toFixed(2);
-			this.items[id].price = parseFloat(this.items[id].price).toFixed(2);
-			arr.push(this.items[id]);
-		}
-		return arr;
-	};
-
-	this.getCart = function () {
-		var cart = {
-			items: this.generateArray(),
-			totalQuantity: this.totalQuantity,
-			totalPrice: this.totalPrice,
-			address: this.address,
-			paymentMethod: this.paymentMethod,
-		};
-		return cart;
-	};
-
-	this.getCartItem = function (id) {
-		var cartItem = {
-			item: this.items[id],
-			totalQuantity: this.totalQuantity,
-			totalPrice: this.totalPrice,
-		};
-		return cartItem;
-	};
+module.exports.deleteAll = (req, res) => {
+	req.session.cart.empty();
+	res.sendStatus(204);
+	res.end();
 };
+
+module.exports.getTrackingOrder = (req, res) => {
+	let cart = req.session.cart;
+	res.render('tracking-order', {
+		bannerPage: 'Order confirm',
+		banner: 'Shop category',
+		cart,
+		user: req.user
+	});
+}
+
+module.exports.postTrackingOrder = async(req, res, next) => {
+	let orderInfo = {
+		cart: req.session.cart,
+		userId: req.user._id,
+		address: req.body.address,
+		phone: req.body.phone,
+	}
+	let order = await Order.create(orderInfo);
+	if(!order){
+		return next(new AppError("Cannot create order", 403));
+	}
+	req.session.cart = null;
+	res.redirect('/cart/success-order')
+}
+
+module.exports.getSuccessOrder = (req, res) => {
+	res.render('success-order', {
+		bannerPage: 'Order confirm',
+		banner: 'Shop category',
+	});
+}

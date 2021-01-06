@@ -1,3 +1,5 @@
+const Brand = require('../models/brandModel');
+const Category = require('../models/categoryModel');
 const Product = require('./../models/productModel');
 const AppError = require('./../utils/AppError');
 const catchAsync = require('./../utils/catchAsync');
@@ -15,10 +17,22 @@ module.exports.getTrendingProduct = (numItems) => {
 	});
 };
 
-module.exports.getTopProducts = (numItems, skip) => {
+module.exports.getTopProducts = (numItems, skip = 0) => {
 	return new Promise((resolve, reject) => {
 		Product.find()
 			.sort({ ratingsAverage: 'desc' })
+			.limit(numItems)
+			.skip(skip)
+			.then((data) => {
+				resolve(data);
+			})
+			.catch((err) => reject(new Error(err)));
+	});
+};
+
+module.exports.getProductsByBrandId = (brandId, numItems, skip) => {
+	return new Promise((resolve, reject) => {
+		Product.find({ brandId: brandId })
 			.limit(numItems)
 			.skip(skip)
 			.then((data) => {
@@ -40,97 +54,58 @@ module.exports.getBestSellerProduct = (numItems) => {
 	});
 };
 
-module.exports.getAll = (query) => {
-	return new Promise((resolve, reject) => {
-		let options = {
-			price: {
-				$gte: query.min,
-				$lte: query.max,
-			},
-			name: {
-				$regex: query.search,
-			},
-		};
+module.exports.getAll = catchAsync(async (query) => {
+	let options = {
+		price: {
+			$gte: query.min,
+			$lte: query.max,
+		},
+		name: {
+			$regex: query.search,
+		},
+	};
 
-		let sortOpt = {};
-		let limitVal, offsetVal;
+	let sortOpt = {};
+	let limitVal, offsetVal;
+	if (query.category > 0) {
+		options.categoryId = query.category;
+	}
 
-		if (query.category > 0) {
-			options.category = query.category;
+	if (query.color > 0) {
+		options.colorId = query.color;
+	}
+
+	if (query.brand > 0) {
+		options.brandId = query.brand;
+	}
+
+	if (query.limit > 0) {
+		limitVal = parseInt(query.limit);
+		offsetVal = parseInt(query.limit * (query.page - 1));
+	}
+
+	if (query.sort) {
+		switch (query.sort) {
+			case 'name':
+				sortOpt.name = 'asc';
+				break;
+			case 'price':
+				sortOpt.price = 'asc';
+				break;
+			case 'ratingsAverage':
+				sortOpt.ratingsAverage = 'asc';
+				break;
+			default:
+				sortOpt.name = 'asc';
+				break;
 		}
-
-		if (query.color > 0) {
-			options.color = query.color;
-		}
-
-		if (query.brand > 0) {
-			options.brand = query.brand;
-		}
-
-		if (query.limit > 0) {
-			limitVal = parseInt(query.limit);
-			offsetVal = parseInt(query.limit * (query.page - 1));
-		}
-
-		if (query.sort) {
-			switch (query.sort) {
-				case 'name':
-					sortOpt.name = 'asc';
-					break;
-				case 'price':
-					sortOpt.price = 'asc';
-					break;
-				case 'ratingsAverage':
-					sortOpt.ratingsAverage = 'asc';
-					break;
-				default:
-					sortOpt.name = 'asc';
-					break;
-			}
-		}
-
-		Product.find(options)
-			.sort(sortOpt)
-			.limit(limitVal)
-			.skip(offsetVal)
-			.then((data) => {
-				resolve(data);
-			})
-			.catch((err) => reject(new AppError(err.message, 404)));
-	});
-};
-
-module.exports.countProducts = (query) => {
-	return new Promise((resolve, reject) => {
-		let options = {
-			price: {
-				$gte: query.min,
-				$lte: query.max,
-			},
-			name: {
-				$regex: query.search,
-			},
-		};
-
-		if (query.category > 0) {
-			options.category = query.category;
-		}
-
-		if (query.color > 0) {
-			options.color = query.color;
-		}
-
-		if (query.brand > 0) {
-			options.brand = query.brand;
-		}
-
-		Product.countDocuments(options)
-			.then((data) => {
-				resolve(data);
-			})
-			.catch((err) => reject(new AppError(err.message, 404)));
-	});
-};
+	}
+	
+	const totalProducts = await Product.find(options).sort(sortOpt);
+	const products = totalProducts.slice(offsetVal, offsetVal + limitVal);
+	const length = totalProducts.length;
+	return {products: products, length: length};
+});
 
 module.exports.getProductById = (id) => {
 	return new Promise((resolve, reject) => {
@@ -141,39 +116,3 @@ module.exports.getProductById = (id) => {
 			.catch((err) => reject(new Error(err)));
 	});
 };
-
-module.export.getAllProducts = catchAsync(async(req, res) => {
-	const products = await Product.find();
-	res.status(200).json({record: products});
-})
-
-module.export.getProduct = catchAsync(async (req, res, next) => {
-	const product = await Product.findOne({_id: req.params.id});
-	if(!product) {
-		next(new AppError(`No document found with that id`, 404))
-	}
-	res.status(200).json({record: product});
-})
-
-module.export.updateProduct = catchAsync(async(req, res, next) => {
-	const product = await Product.findByIdAndUpdate({_id: req.params.id}, req.body);
-	
-	if(!product) {
-		next(new AppError(`No document found with that id`, 404))
-	}
-	res.status(200).json({record: product});
-})
-
-module.exports.addProduct = catchAsync(async (req, res) => {
-	const product = await Product.create(req.body);
-	
-	res.status(201).json({record: product});
-})
-
-module.exports.deleteProduct = catchAsync(async(req, res) => {
-	const product = await Product.findByIdAndDelete(req.params.id);
-	if(!product) {
-		next(new AppError(`No document found with that id`, 404))
-	}
-	res.status(200).json({record: null});
-})

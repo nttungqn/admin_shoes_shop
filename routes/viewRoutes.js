@@ -4,8 +4,8 @@ const viewController = require('./../controllers/viewController');
 
 const router = express.Router();
 
-router.get('/', viewController.getDashboard)
-
-router.route('/products').get(viewController.getProductTable)
+router.get('/', viewController.getOverview);
+router.get('/products', viewController.getShopCategory);
+router.get('/products/:id', viewController.getDetailProduct);
 
 module.exports = router;

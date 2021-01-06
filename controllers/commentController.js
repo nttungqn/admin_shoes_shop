@@ -6,7 +6,7 @@ module.exports.add = (comment) => {
 			.then((data) => {
 				resolve(data);
 			})
-			.catch((err) => reject(new Error(err)));
+			.catch((err) => reject(new AppError(err)));
 	});
 };
 
