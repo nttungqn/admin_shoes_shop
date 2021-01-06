@@ -1,10 +1,19 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
+DEFAULT_ADDRESS = '225 Nguyen Van Cu Street';
+DEFAULT_PHONE_NUMBER = '0905500456';
+let randomNumber = Math.floor(Math.random() * (3 - 1 + 1) ) + 1;
+DEFAULT_AVATAR = `avatar-${randomNumber}.png`;
+
 const adminSchema = new mongoose.Schema({
 	name: {
 		type: String,
 		require: [true, 'Please provide a fullname'],
+	},
+	image: {
+		type: String,
+		default: DEFAULT_AVATAR,
 	},
 	email: {
 		type: String,
@@ -19,6 +28,9 @@ const adminSchema = new mongoose.Schema({
 		type: String,
 		default: DEFAULT_ADDRESS,
 	},
+	salt: {
+		type: String
+	},
 	phone: {
 		type: String,
 		default: DEFAULT_PHONE_NUMBER
@@ -27,6 +39,15 @@ const adminSchema = new mongoose.Schema({
 		type: Boolean,
 		required: false,
 		default: false
+	},
+	isLock: {
+		type: Boolean,
+		required: false,
+		default: false
+	},
+	verify_token: {
+		type: String,
+		required: false
 	},
 });
 
@@ -37,6 +58,7 @@ adminSchema.pre('save', async function(next) {
 	this.password = await bcrypt.hash(this.password, this.salt);
 	next();
   });
+
   
 const Admin = mongoose.model('Admin', adminSchema, 'admins');
 

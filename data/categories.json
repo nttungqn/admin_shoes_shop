@@ -1,0 +1,20 @@
+[
+    {
+        "_id": 1,
+        "name": "Men",
+        "image": "category-1.jpg",
+        "__v": 0
+    },
+    {
+        "_id": 2,
+        "name": "Kids",
+        "image": "category-2.jpg",
+        "__v": 0
+    },
+    {
+        "_id": 3,
+        "name": "Women",
+        "image": "category-3.jpg",
+        "__v": 0
+    }
+]

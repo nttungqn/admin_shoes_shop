@@ -77,7 +77,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use((req, res, next) => {
+	var cart = new Cart(req.session.cart ? req.session.cart : {});
+	req.session.cart = cart
 	res.locals.session = req.session;
+	res.locals.totalQuantity = cart.totalQuantity;
 	if(req.user)
 		res.locals.user = req.user;
 	next();

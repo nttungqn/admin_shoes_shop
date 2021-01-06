@@ -308,7 +308,7 @@ CodeMirror.defineMode("perl",function(){
                 gethostbyaddr                   :1,     // - get host record given its address
                 gethostbyname                   :1,     // - get host record given name
                 gethostent                      :1,     // - get next hosts record
-                getlogin                        :1,     // - return who logged in at this tty
+                getSignIn                        :1,     // - return who logged in at this tty
                 getnetbyaddr                    :1,     // - get network record given its address
                 getnetbyname                    :1,     // - get networks record given name
                 getnetent                       :1,     // - get next networks record

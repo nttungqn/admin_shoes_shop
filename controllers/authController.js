@@ -4,20 +4,22 @@ const randomstring = require('randomstring')
 const AppError = require('./../utils/AppError')
 const User = require('./../models/userModel')
 
-module.exports.getLogin = (req, res) => {
+module.exports.getSignIn = (req, res) => {
 	req.session.returnURL = req.query.returnURL;
-	res.render('login', {
-		banner: 'Log In',
+	console.log(req.flash('error')[0])
+	res.render('sign-in', {
+		layout: false,
 		message: req.flash('error')[0] || '',
 	});
 }
 
-module.exports.postLogin = (req, res, next) => {
+module.exports.postSignIn = (req, res, next) => {
 	passport.authenticate('local-login', {
 		successRedirect: req.session.returnURL || '/',
-		failureRedirect: '/login',
+		failureRedirect: '/sign-in',
 		failureFlash: true
 	})(req, res, next);
+	console.log(req.flash('error')[0])
 }
 
 module.exports.logout = (req, res) => {
@@ -30,14 +32,14 @@ module.exports.logout = (req, res) => {
 
 module.exports.getSignUp = (req, res) => {
 	res.status(200).render('sign-up', {
-		banner: 'Sign up',
+		layout: false,
 		message: req.flash('error')[0] || '',
 	});
 }
 
 module.exports.postSignUp = (req, res, next) => {
 	passport.authenticate('local-signup', {
-		successRedirect: '/verify-account',
+		successRedirect: '/sign-in',
 		failureRedirect: '/sign-up',
 		failureFlash: true
 	})(req, res, next);
@@ -179,5 +181,5 @@ module.exports.postConfirmPasswordReset = async(req, res) => {
 	
 	user.password = newPassword;
 	user.save();
-	res.redirect('/login');
+	res.redirect('/sign-in');
 }

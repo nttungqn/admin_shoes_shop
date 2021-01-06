@@ -1,0 +1,26 @@
+[
+    {
+        "_id": 1,
+        "name": "Puma",
+        "image": "brand-1.png",
+        "__v": 0
+    },
+    {
+        "_id": 2,
+        "name": "Vans",
+        "image": "brand-2.png",
+        "__v": 0
+    },
+    {
+        "_id": 3,
+        "name": "Nike",
+        "image": "brand-3.png",
+        "__v": 0
+    },
+    {
+        "_id": 4,
+        "name": "Adidas",
+        "image": "brand-4.png",
+        "__v": 0
+    }
+]

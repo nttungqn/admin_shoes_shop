@@ -75,7 +75,7 @@ productSchema.pre(/^find/, function (next) {
 	});
 
 	this.populate({
-		path: 'categoryId:',
+		path: 'categoryId',
 		select: 'name',
 	});
 

@@ -9,7 +9,7 @@ module.exports = function () {
     });
 
     passport.deserializeUser(function (id, done) {
-        User.findById(id, function (err, user) {
+        Admin.findById(id, function (err, user) {
             done(err, user);
         });
     });
@@ -57,7 +57,7 @@ module.exports = function () {
     },
         async function(req, email, password, done){
             try {
-                const user = await User.findOne({ email: email });
+                const user = await Admin.findOne({ email: email });
                 
                 if(user){
                     return done(null, false, {
