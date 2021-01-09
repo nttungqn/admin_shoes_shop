@@ -14,7 +14,7 @@ const flash = require('connect-flash')
 const justHandlebarsHelpers = require('just-handlebars-helpers');
 
 const viewRouter = require('./routes/viewRoutes');
-const userRouter = require('./routes/userRoutes');
+const adminRouter = require('./routes/adminRoutes');
 const commentRouter = require('./routes/commentRoutes');
 const Cart = require('./models/cartModel');
 const cartRouter = require('./routes/cartRoutes');
@@ -27,7 +27,6 @@ const app = express();
 // Serving static files
 app.use(express.static(path.join(__dirname, 'public')));
 
-justHandlebarsHelpers.registerHelpers(Handlebars);
 
 // set view engine
 const hbs = expressHandlebars.create({
@@ -40,7 +39,6 @@ const hbs = expressHandlebars.create({
 		createPagination: paginate.createPagination,
 	},
 });
-
 
 app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
@@ -88,7 +86,7 @@ app.use((req, res, next) => {
 
 
 app.use('/', viewRouter);
-app.use('/', userRouter)
+app.use('/', adminRouter)
 app.use('/cart', cartRouter);
 app.use('/comments', commentRouter);
 
