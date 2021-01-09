@@ -3,27 +3,19 @@ const Order = require('../models/orderModel');
 
 module.exports.getAccount = (req, res) => {
     res.status(200).render('user-profile', {
-        user: req.user
+        user: req.user,
+        type: Boolean(req.flash('success')[0])
     })
 }
 
-module.exports.postAccount = (req, res, next) => {
+module.exports.postAccount = async(req, res, next) => {
     const updateInfo = req.body;
-    const user = Admin.findByIdAndUpdate(req.user.id, updateInfo);
-    
-    if(!user){
-        res.status(200).render('user-profile', {
-            banner: 'User profile',
-            user: req.user,
-            type: false
-        })
+    const user = await Admin.findByIdAndUpdate(req.user._id, updateInfo);
+    if(user){
+        req.flash('success', 'Success')
+        req.user = user
     }
-    
-    res.status(200).render('user-profile', {
-        banner: 'User profile',
-        user: req.user,
-        type: true
-    })
+    res.redirect('/account')
 }
 
 // module.exports.getChangePassword = (req, res) => {

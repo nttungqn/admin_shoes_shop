@@ -189,12 +189,12 @@
                 {{!-- <li class="active">
                     <a href="#overview" data-toggle="tab">Overview</a>
                 </li> --}}
-                <li class="active">
+                {{!-- <li class="active">
                     <a href="#edit" data-toggle="tab">Edit</a>
-                </li>
+                </li> --}}
             </ul>
             <div class="tab-content">
-                {{!-- <div id="overview" class="tab-pane active">
+                {{!-- <div id="overview" class="tab-pane">
                     <h4 class="mb-md">Update Status</h4>
 
                     <section class="simple-compose-box mb-xlg">
@@ -269,36 +269,40 @@
                 </div> --}}
                 <div id="edit" class="tab-pane active">
                     {{#if type}}
-                    <div class="col-md-12 form-group alert alert-success" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <div class="form-group alert alert-success" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
                         <strong>Success!</strong> Update profile successfully!
                     </div>
                     {{/if}}
-                    <form class="form-horizontal" method="post" action='/account'>
+                    <form class="form-horizontal" method="POST" action='/account'>
                         <h4 class="mb-xlg">Personal Information</h4>
                         <fieldset>
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="email">Email</label>
                                 <div class="col-md-8">
-                                    <input type="email" class="form-control" id="email" value={{user.email}} disabled>
+                                    <input type="email" class="form-control" name="email" value={{user.email}} disabled>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="name">Name</label>
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control" id="name" value="{{user.name}}" required="required" pattern="\S+.*">
+                                    <input type="text" class="form-control" name="name" value="{{user.name}}"
+                                        required="required" pattern="\S+.*">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="address">Address</label>
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control" id="address" value="{{user.address}}" required="required" pattern="\S+.*">
+                                    <input type="text" class="form-control" name="address" value="{{user.address}}"
+                                        required="required" pattern="\S+.*">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="phone">Phone Number</label>
                                 <div class="col-md-8">
-                                    <input type="tel" class="form-control" id="phone" pattern="[0-9]{10}" value="{{user.phone}}">
+                                    <input type="tel" class="form-control" id="phone" pattern="[0-9]{10}"
+                                        value="{{user.phone}}">
                                 </div>
                             </div>
                         </fieldset>
@@ -320,8 +324,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </fieldset> --}}
-                        {{!-- <hr class="dotted tall">
+                        </fieldset>
+                        <hr class="dotted tall">
                         <h4 class="mb-xlg">Change Password</h4>
                         <fieldset class="mb-xl">
                             <div class="form-group">
@@ -341,20 +345,19 @@
                         <div class="panel-footer">
                             <div class="row">
                                 <div class="col-md-9 col-md-offset-3">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button type="submit" class="btn btn-primary" value="submit">Submit</button>
                                     <a class="btn btn-default" href="/">Cancel</a>
                                 </div>
                             </div>
                         </div>
-
                     </form>
-
                 </div>
             </div>
+            
         </div>
     </div>
     <div class="col-md-12 col-lg-3">
-
+        
         <h4 class="mb-md">Sale Stats</h4>
         <ul class="simple-card-list mb-xlg">
             <li class="primary">
@@ -428,9 +431,9 @@
 <!-- end: page -->
 
 <script>
-	window.setTimeout(function() {
-		$(".alert").fadeTo(500, 0).slideUp(500, function(){
-			$(this).remove(); 
-		});
-	}, 2000);
+    window.setTimeout(function () {
+        $(".alert").fadeTo(500, 0).slideUp(500, function () {
+            $(this).remove();
+        });
+    }, 2000);
 </script>

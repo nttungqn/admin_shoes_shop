@@ -37,6 +37,7 @@ const hbs = expressHandlebars.create({
 	handlebars: allowInsecurePrototypeAccess(Handlebars),
 	helpers: {
 		createPagination: paginate.createPagination,
+		justHandlebarsHelpers
 	},
 });
 
