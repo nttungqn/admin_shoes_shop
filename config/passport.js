@@ -4,13 +4,13 @@ const bcrypt = require('bcryptjs');
 const Admin = require('./../models/adminModel');
 
 module.exports = function () {
-    passport.serializeUser(function (user, done) {
-        done(null, user._id);
+    passport.serializeUser(function (admin, done) {
+        done(null, admin._id);
     });
 
     passport.deserializeUser(function (id, done) {
-        Admin.findById(id, function (err, user) {
-            done(err, user);
+        Admin.findById(id, function (err, admin) {
+            done(err, admin);
         });
     });
 
@@ -24,14 +24,14 @@ module.exports = function () {
         },
             async function (req, email, password, done) {
                 try {
-                    const user = await Admin.findOne({ email: email });
-                    if(!user.isAuthenticated) {
+                    const admin = await Admin.findOne({ email: email });
+                    if(!admin.isAuthenticated) {
                         return done(null, false, {
                             message: 'Your account has not be authenticated',
                         });
                     }
                     
-                    bcrypt.compare(password, user.password, function (err, result) {
+                    bcrypt.compare(password, admin.password, function (err, result) {
                         if (err) {
                             return done(err);
                         }
@@ -41,7 +41,7 @@ module.exports = function () {
                             });
 
                         }
-                        return done(null, user);
+                        return done(null, admin);
                     });
                 } catch (err) {
                     return done(err);
@@ -57,9 +57,9 @@ module.exports = function () {
     },
         async function(req, email, password, done){
             try {
-                const user = await Admin.findOne({ email: email });
+                const admin = await Admin.findOne({ email: email });
                 
-                if(user){
+                if(admin){
                     return done(null, false, {
                         message: 'Email already in use !!',
                     })
@@ -84,14 +84,14 @@ module.exports = function () {
                     });
                 }
                 
-                const newUser = await Admin.create(req.body)
+                const newAdmin = await Admin.create(req.body)
                 
-                if(!newUser){
+                if(!newAdmin){
                     return done(null, false, {
                         message: 'Something went wrong'
                     })
                 }
-                return done(null, newUser)
+                return done(null, newAdmin)
                 
             } catch (err) {
                 return done(err)

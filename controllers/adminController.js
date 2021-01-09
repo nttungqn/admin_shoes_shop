@@ -2,18 +2,17 @@ const Admin = require('../models/adminModel');
 const Order = require('../models/orderModel');
 
 module.exports.getAccount = (req, res) => {
-    res.status(200).render('user-profile', {
-        user: req.user,
+    res.status(200).render('admin-profile', {
         type: Boolean(req.flash('success')[0])
     })
 }
 
 module.exports.postAccount = async(req, res, next) => {
     const updateInfo = req.body;
-    const user = await Admin.findByIdAndUpdate(req.user._id, updateInfo);
-    if(user){
+    const admin = await Admin.findByIdAndUpdate(req.user._id, updateInfo);
+    if(admin){
         req.flash('success', 'Success')
-        req.user = user
+        req.user = admin
     }
     res.redirect('/account')
 }

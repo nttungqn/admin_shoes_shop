@@ -957,7 +957,7 @@
 			text: 'If you\'ve given me permission, I\'ll appear as a desktop notification. If you haven\'t, I\'ll still appear as a regular notice.',
 			desktop: {
 				desktop: true,
-				icon: 'assets/images/!happy-face.png'
+				icon: '/assets/images/!happy-face.png'
 			}
 		})).get().click(function() {
 			alert('Hey! You clicked the desktop notification!');

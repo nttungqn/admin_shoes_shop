@@ -10,7 +10,8 @@ const COMMENTS_PER_PAGE = 3;
 
 module.exports.getOverview = catchAsync(async (req, res, next) => {
 	if(req.user){
-		res.render('index.hbs')
+		res.render('index', {
+		})
 	}else {
 		res.redirect('/sign-in')
 	}
