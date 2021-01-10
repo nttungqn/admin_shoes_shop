@@ -14,5 +14,6 @@ router.get('/brand-table', viewController.getBrandTable);
 
 
 router.route('/brands/:id').get(viewController.getBrand).post(viewController.postBrand).delete(viewController.deleteBrand);
+router.route('/products').get(viewController.getProductForm).post(viewController.postProductForm);
 
 module.exports = router;
