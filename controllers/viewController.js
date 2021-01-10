@@ -2,6 +2,7 @@
 const catchAsync = require('./../utils/catchAsync');
 const Product = require('./../models/productModel');
 const User = require('./../models/userModel')
+const Brand = require('./../models/brandModel');
 
 // 1) Get tour data from collection
 // 2) Build template
@@ -34,6 +35,36 @@ module.exports.getUserTable = catchAsync(async (req, res, next) => {
 	})
 })
 
+
+module.exports.getBrandTable = catchAsync(async (req, res, next) => {
+	const brands = await Brand.find();
+	for (let [index, brand] of brands.entries()) {
+		brands[index].quantity = await Product.countDocuments({brandId: brand._id})
+	}
+	res.render('brand-table', {brands})
+})
+
+module.exports.getBrand = catchAsync(async (req, res, next) => {
+	const brand = await Brand.findOne({_id: req.params.id})
+	res.status(200).render('brand-detail', {
+		brand,
+        type: Boolean(req.flash('success')[0])
+    })
+})
+
+module.exports.postBrand = async(req, res, next) => {
+    const updateInfo = req.body;
+    const brand = await Brand.findByIdAndUpdate(req.params.id, updateInfo);
+    if(brand){
+        req.flash('success', 'Success')
+    }
+    res.redirect(`/brands/${req.params.id}`)
+}
+
+module.exports.deleteBrand = catchAsync(async (req, res, next) => {
+	await Brand.findByIdAndDelete(req.params.id);
+	res.redirect('/brand-table')
+})
 
 // module.exports.getShopCategory = catchAsync(async (req, res, next) => {
 // 	const categories = await Category.find();

@@ -1,6 +1,6 @@
 <section role="main" class="content-body">
     <header class="page-header">
-        <h2>Product Table</h2>
+        <h2>Brand Table</h2>
 
         <div class="right-wrapper pull-right">
             <ol class="breadcrumbs">
@@ -10,7 +10,7 @@
                     </a>
                 </li>
                 <li><span>Tables</span></li>
-                <li><span>Product Table</span></li>
+                <li><span>Brand Table</span></li>
             </ol>
 
             <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
@@ -25,38 +25,31 @@
                 <a href="#" class="fa fa-times"></a>
             </div>
 
-            <h2 class="panel-title">List Products</h2>
+            <h2 class="panel-title">List Brands</h2>
         </header>
         <div class="panel-body">
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="mb-md">
-                        <button id="addToTable" class="btn btn-primary">Add <i class="fa fa-plus"></i></button>
-                    </div>
-                </div>
-            </div>
             <table class="table table-bordered table-striped mb-none" id="datatable-editable">
                 <thead>
                     <tr>
+                        <th>Id</th>
                         <th>Name</th>
-                        <th>Price</th>
-                        <th>Brand</th>
-                        <th>Category</th>
+                        <th style="text-align:center">Image</th>                      
+                        <th>Quantity</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {{#each products}}
+                    {{#each brands}}
                     <tr class="gradeX">
+                        <td>{{this._id}}</td>
                         <td>{{this.name}}</td>
-                        <td>{{this.price}}$</td>
-                        <td>{{this.brandId.name}}</td>
-                        <td>{{this.categoryId.name}}</td>
+                        <td style="width: 1000px; text-align: center;"><img style="width:10%; height:auto; " src="/assets/images/brands/{{this.image}}" alt="" srcset=""></td>
+                        <td>{{this.quantity}}</td>
                         <td class="actions">
                             <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
                             <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
-                            <a href="#" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
-                            <a href="#" class="on-default remove-row remove-product"><i class="fa fa-trash-o"></i></a>
+                            <a href="/brands/{{this._id}}" class="on-default"><i class="fa fa-pencil"></i></a>
+                            {{!-- <a data-method="DELETE" href="/brands/{{this._id}}" class="on-default remove-brand" onclick="return confirm('Are you sure to delete?')" rel="nofollow"><i class="fa fa-trash-o"></i></a> --}}
                         </td>
                     </tr>
                     {{/each}}
