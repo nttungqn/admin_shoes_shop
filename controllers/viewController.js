@@ -44,7 +44,7 @@ module.exports.postProductForm = catchAsync(async (req, res, next) => {
 			return;
 		}
 		fields.imageCover = files.image.name;
-		fields.brandId = parseInt(fields.brandId);
+		fields.brandId = fields.brandId;
 		fields.categoryId = parseInt(fields.categoryId);
 		fields.price = parseFloat(fields.price);
 		fields.images = [`${files.image.name}`]
@@ -53,6 +53,7 @@ module.exports.postProductForm = catchAsync(async (req, res, next) => {
 			if (err) throw err;
 		});
 		await Product.create(fields);
+		res.redirect('/products')
 	});
 
 	form.on('file', function (name, file) {
@@ -72,7 +73,7 @@ module.exports.postProductForm = catchAsync(async (req, res, next) => {
 		});
 		console.log(file.path);
 	})
-	res.redirect('/products')
+	
 });
 
 module.exports.getUserTable = catchAsync(async (req, res, next) => {
@@ -153,7 +154,7 @@ module.exports.postProduct = async(req, res, next) => {
 			return;
 		}
 		if(fields.brandId)
-			fields.brandId = parseInt(fields.brandId);
+			fields.brandId = fields.brandId;
 		if(fields.categoryId)
 			fields.categoryId = parseInt(fields.categoryId);
 		fields.price = parseFloat(fields.price);
@@ -191,4 +192,9 @@ module.exports.postProduct = async(req, res, next) => {
 	})
 	req.flash('success', 'Success')
 	res.redirect(`/products/${req.params.id}`)
+}
+
+module.exports.deleteProduct = async(req, res) => {
+	await Product.findByIdAndDelete(req.params.id);
+	res.redirect('/products')
 }

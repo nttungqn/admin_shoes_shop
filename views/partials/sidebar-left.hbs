@@ -21,14 +21,14 @@
                             <span>Dashboard</span>
                         </a>
                     </li>
-                    <li>
+                    {{!-- <li>
                         <a href="mailbox-folder">
                             <span class="pull-right label label-primary">182</span>
                             <i class="fa fa-envelope" aria-hidden="true"></i>
                             <span>Mailbox</span>
                         </a>
-                    </li>
-                    <li class="nav-parent">
+                    </li> --}}
+                    {{!-- <li class="nav-parent">
                         <a>
                             <i class="fa fa-copy" aria-hidden="true"></i>
                             <span>Pages</span>
@@ -110,8 +110,8 @@
                                 </a>
                             </li>
                         </ul>
-                    </li>
-                    <li class="nav-parent">
+                    </li> --}}
+                    {{!-- <li class="nav-parent">
                         <a>
                             <i class="fa fa-tasks" aria-hidden="true"></i>
                             <span>UI Elements</span>
@@ -223,16 +223,34 @@
                                 </a>
                             </li>
                         </ul>
+                    </li> --}}
+                    <li class="nav-parent">
+                        <a>
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                            <span>My Account</span>
+                        </a>
+                        <ul class="nav nav-children">
+                            <li>
+                                <a href="/account">
+                                    My Profile
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/logout">
+                                    Logout
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                     <li class="nav-parent">
                         <a>
-                            <i class="fa fa-list-alt" aria-hidden="true"></i>
+                            <i class="fa fa-list-alt" aria-hidden="false"></i>
                             <span>Forms</span>
                         </a>
                         <ul class="nav nav-children">
                             <li>
                                 <a href="/product-form">
-                                    Add product
+                                    Add Product
                                 </a>
                             </li>
                             <li>
@@ -266,7 +284,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-parent">
+                    {{!-- <li class="nav-parent">
                         <a>
                             <i class="fa fa-map-marker" aria-hidden="true"></i>
                             <span>Maps</span>
@@ -356,7 +374,7 @@
                             <i class="fa fa-external-link" aria-hidden="true"></i>
                             <span>Front-End <em class="not-included">(Not Included)</em></span>
                         </a>
-                    </li>
+                    </li> --}}
                 </ul>
             </nav>
 
