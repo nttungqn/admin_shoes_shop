@@ -10,6 +10,7 @@ const path = require('path');
 const request = require('request')
 
 const USER_SERVER_URL = 'http://localhost:3000';
+
 module.exports.getOverview = catchAsync(async (req, res, next) => {
 	if (req.user) {
 		res.render('index', {
@@ -71,7 +72,7 @@ module.exports.postProductForm = catchAsync(async (req, res, next) => {
 		});
 		console.log(file.path);
 	})
-	res.redirect('/product-table')
+	res.redirect('/products')
 });
 
 module.exports.getUserTable = catchAsync(async (req, res, next) => {
@@ -110,5 +111,18 @@ module.exports.postBrand = async (req, res, next) => {
 
 module.exports.deleteBrand = catchAsync(async (req, res, next) => {
 	await Brand.findByIdAndDelete(req.params.id);
-	res.redirect('/brand-table')
+	res.redirect('/brands')
 })
+
+module.exports.getBrandForm = catchAsync(async (req, res, next) => {
+	res.status(200).render('brand-form', {
+	})
+})
+
+module.exports.postBrandForm = async (req, res, next) => {
+	const brand = await Brand.create(req.body);
+	if (brand) {
+		res.redirect(`/brands`)
+	}
+	next();
+}

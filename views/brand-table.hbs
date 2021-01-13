@@ -28,6 +28,13 @@
             <h2 class="panel-title">List Brands</h2>
         </header>
         <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="mb-md">
+                        <a class="btn btn-primary" href='/brand-form'>Add <i class="fa fa-plus"></i></a>
+                    </div>
+                </div>
+            </div>
             <table class="table table-bordered table-striped mb-none" id="datatable-editable">
                 <thead>
                     <tr>
@@ -41,11 +48,15 @@
                 <tbody>
                     {{#each brands}}
                     <tr class="gradeX">
-                        <td>{{this._id}}</td>
-                        <td>{{this.name}}</td>
+                        <td style="text-align: center; vertical-align: middle;">{{this._id}}</td>
+                        <td style="text-align: center; vertical-align: middle;">{{this.name}}</td>
+                        {{#if this.image}}
                         <td style="width: 1000px; text-align: center;"><img style="width:10%; height:auto; " src="/assets/images/brands/{{this.image}}" alt="" srcset=""></td>
-                        <td>{{this.quantity}}</td>
-                        <td class="actions">
+                        {{else}}
+                        <td style="text-align: center; vertical-align: middle;">No image</td>
+                        {{/if}}
+                        <td style="text-align: center; vertical-align: middle;">{{this.quantity}}</td>
+                        <td class="actions" style="text-align: center; vertical-align: middle;">
                             <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
                             <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
                             <a href="/brands/{{this._id}}" class="on-default"><i class="fa fa-pencil"></i></a>

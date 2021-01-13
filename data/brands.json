@@ -1,26 +1,26 @@
 [
     {
-        "_id": 1,
+        "_id": "5ffe5d5bfc13ae3b14000001",
         "name": "Puma",
-        "image": "brand-1.png",
+        "image": "brand-1.jpg",
         "__v": 0
     },
     {
-        "_id": 2,
+        "_id": "5ffe5d5bfc13ae3b14000002",
         "name": "Vans",
-        "image": "brand-2.png",
+        "image": "brand-2.jpg",
         "__v": 0
     },
     {
-        "_id": 3,
+        "_id": "5ffe5d5bfc13ae3b14000003",
         "name": "Nike",
-        "image": "brand-3.png",
+        "image": "brand-3.jpg",
         "__v": 0
     },
     {
-        "_id": 4,
+        "_id": "5ffe5d5bfc13ae3b14000004",
         "name": "Adidas",
-        "image": "brand-4.png",
+        "image": "brand-4.jpg",
         "__v": 0
     }
 ]

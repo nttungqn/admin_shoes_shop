@@ -1,5 +1,3 @@
-/** @format */
-
 const mongoose = require('mongoose');
 
 const productSchema = new mongoose.Schema(
@@ -41,7 +39,7 @@ const productSchema = new mongoose.Schema(
 			required: [true, 'A shoes must have a image cover'],
 		},
 		brandId: {
-			type: Number,
+			type: mongoose.Schema.Types.ObjectId,
 			ref: 'Brand',
 			required: [true, 'Product must belong to a brand'],
 		},
