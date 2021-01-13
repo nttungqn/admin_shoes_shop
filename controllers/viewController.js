@@ -198,3 +198,11 @@ module.exports.deleteProduct = async(req, res) => {
 	await Product.findByIdAndDelete(req.params.id);
 	res.redirect('/products')
 }
+
+// module.export.getUser = async(req, res) => {
+// 	const user = await user.findOne({ _id: req.params.id })
+// 	res.status(200).render('user-form', {
+// 		user,
+// 		type: Boolean(req.flash('success')[0])
+// 	})
+// }

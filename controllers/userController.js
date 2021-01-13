@@ -4,7 +4,7 @@ module.exports.getUser = async(req, res) => {
     const id = req.params.id;
     const user = await User.findOne({_id: id});
     
-    res.status(200).render('user-profile', {
+    res.status(200).render('user-form', {
         user,
         type: Boolean(req.flash('success')[0])
     })
