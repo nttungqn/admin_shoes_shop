@@ -21,6 +21,7 @@ router.get('/', viewController.getOverview);
 router.get('/products', viewController.getProductTable);
 router.get('/brands', viewController.getBrandTable);
 router.get('/users', viewController.getUserTable);
+router.get('/orders', viewController.getOrderTable);
 
 
 module.exports = router;

@@ -33,6 +33,7 @@
         "formidable": "^1.2.2",
         "handlebars": "^4.7.6",
         "just-handlebars-helpers": "^1.0.18",
+        "moment": "^2.29.1",
         "mongoose": "^5.10.2",
         "morgan": "^1.10.0",
         "multer": "^1.4.2",

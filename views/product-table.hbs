@@ -39,9 +39,9 @@
                 <thead>
                     <tr>
                         <th>Name</th>
+                        <th>Image</th>
                         <th>Price</th>
                         <th>Brand</th>
-                        <th>Category</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -49,9 +49,9 @@
                     {{#each products}}
                     <tr class="gradeX">
                         <td>{{this.name}}</td>
+                        <td style="text-align: center;"><img style="width:10%; height:auto; " src="/assets/images/products/{{this.imageCover}}" alt="" srcset=""></td>
                         <td>{{this.price}}$</td>
                         <td>{{this.brandId.name}}</td>
-                        <td>{{this.categoryId.name}}</td>
                         <td class="actions">
                             {{!-- <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
                             <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a> --}}

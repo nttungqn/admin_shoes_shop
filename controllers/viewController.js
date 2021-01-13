@@ -4,6 +4,7 @@ const Product = require('./../models/productModel');
 const User = require('./../models/userModel')
 const Brand = require('./../models/brandModel');
 const Category = require('./../models/categoryModel');
+const Order = require('./../models/orderModel');
 const formidable = require('formidable');
 const fs = require('fs');
 const path = require('path');
@@ -199,10 +200,10 @@ module.exports.deleteProduct = async(req, res) => {
 	res.redirect('/products')
 }
 
-// module.export.getUser = async(req, res) => {
-// 	const user = await user.findOne({ _id: req.params.id })
-// 	res.status(200).render('user-form', {
-// 		user,
-// 		type: Boolean(req.flash('success')[0])
-// 	})
-// }
+module.exports.getOrderTable = async(req, res) => {
+	const orders = await Order.find();
+
+	res.render('order-table', {
+		orders,
+	})
+}
