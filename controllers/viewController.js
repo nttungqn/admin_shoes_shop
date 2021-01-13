@@ -44,10 +44,10 @@ module.exports.postProductForm = catchAsync(async (req, res, next) => {
 			return;
 		}
 		fields.imageCover = files.image.name;
-		fields.images = [`${files.image.name}`]
 		fields.brandId = parseInt(fields.brandId);
 		fields.categoryId = parseInt(fields.categoryId);
 		fields.price = parseFloat(fields.price);
+		fields.images = [`${files.image.name}`]
 		let newPath = path.join(__dirname, `/../public/assets/images/products/${files.image.name}`)
 		fs.copyFile(files.image.path, newPath, function (err) {
 			if (err) throw err;
@@ -94,7 +94,7 @@ module.exports.getBrandTable = catchAsync(async (req, res, next) => {
 
 module.exports.getBrand = catchAsync(async (req, res, next) => {
 	const brand = await Brand.findOne({ _id: req.params.id })
-	res.status(200).render('brand-detail', {
+	res.status(200).render('brand-form', {
 		brand,
 		type: Boolean(req.flash('success')[0])
 	})
@@ -125,4 +125,70 @@ module.exports.postBrandForm = async (req, res, next) => {
 		res.redirect(`/brands`)
 	}
 	next();
+}
+
+module.exports.getProductFromBrand = async(req, res) => {
+	const brandId = req.params.id;
+	const products = await Product.find({brandId: brandId});
+	res.render('product-table', {
+		products,
+	})
+}
+
+module.exports.getProduct = async(req, res, next) => {
+	const product = await Product.findOne({_id: req.params.id})
+	const brands = await Brand.find();
+	const categories = await Category.find();
+	const type = req.flash('success')[0];
+	if(product){
+		res.render('product-form', {product, brands, categories, brandId: product.brandId._id, type})
+	}
+}
+
+module.exports.postProduct = async(req, res, next) => {
+	const form = new formidable.IncomingForm();
+	form.parse(req, async function (err, fields, files) {
+		if (err) {
+			console.error(err.message);
+			return;
+		}
+		if(fields.brandId)
+			fields.brandId = parseInt(fields.brandId);
+		if(fields.categoryId)
+			fields.categoryId = parseInt(fields.categoryId);
+		fields.price = parseFloat(fields.price);
+		fields.warehouse = parseInt(fields.warehouse);
+		if(files.image.size > 0){
+			fields.imageCover = files.image.name;
+			fields.images = [`${files.image.name}`]
+			let newPath = path.join(__dirname, `/../public/assets/images/products/${files.image.name}`)
+			fs.copyFile(files.image.path, newPath, function (err) {
+				if (err) throw err;
+			});
+		}
+		await Product.findByIdAndUpdate(req.params.id,fields);
+		
+	});
+
+	form.on('file', function (name, file) {
+		if(file.size > 0){
+			let formData = {
+				file: {
+					value: fs.createReadStream(file.path),
+					options: {
+						filename: file.name
+					}
+				}
+			};
+			const postUrl = USER_SERVER_URL + '/upload'
+			request.post({ url: postUrl, formData: formData }, function (err, httpResponse, body) {
+				console.log(err);
+				console.log(httpResponse);
+				console.log(body)
+			});
+			console.log(file.path);
+		}
+	})
+	req.flash('success', 'Success')
+	res.redirect(`/products/${req.params.id}`)
 }

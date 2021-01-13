@@ -42,6 +42,8 @@ const hbs = expressHandlebars.create({
 	},
 });
 
+justHandlebarsHelpers.registerHelpers(hbs.handlebars);
+
 app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 

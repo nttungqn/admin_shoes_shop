@@ -11,8 +11,10 @@ const router = express.Router();
 // router.use(authController.protect);
 router.get('/categories', async(req, res) => {const records = await Product.find({}); console.log(records); });
 router.route('/product-form').get(viewController.getProductForm).post(viewController.postProductForm);
+router.route('/products/:id').get(viewController.getProduct).post(viewController.postProduct);
 router.route('/brand-form').get(viewController.getBrandForm).post(viewController.postBrandForm);
 router.route('/brands/:id').get(viewController.getBrand).post(viewController.postBrand).delete(viewController.deleteBrand);
+router.route('/brands/:id/products').get(viewController.getProductFromBrand)
 
 router.get('/', viewController.getOverview);
 router.get('/products', viewController.getProductTable);

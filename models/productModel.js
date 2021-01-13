@@ -30,6 +30,10 @@ const productSchema = new mongoose.Schema(
 			type: Number,
 			required: [true, 'A shoes must have a price'],
 		},
+		warehouse: {
+			type: Number,
+			default: 100
+		},
 		description: {
 			type: String,
 		},
