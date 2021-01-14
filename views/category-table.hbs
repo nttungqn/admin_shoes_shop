@@ -1,0 +1,72 @@
+<section role="main" class="content-body">
+    <header class="page-header">
+        <h2>Category Table</h2>
+
+        <div class="right-wrapper pull-right">
+            <ol class="breadcrumbs">
+                <li>
+                    <a href="/">
+                        <i class="fa fa-home"></i>
+                    </a>
+                </li>
+                <li><span>Tables</span></li>
+                <li><span>Category Table</span></li>
+            </ol>
+
+            <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
+        </div>
+    </header>
+
+    <!-- start: page -->
+    <section class="panel">
+        <header class="panel-heading">
+            <div class="panel-actions">
+                <a href="#" class="fa fa-caret-down"></a>
+                <a href="#" class="fa fa-times"></a>
+            </div>
+
+            <h2 class="panel-title">List Categories</h2>
+        </header>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="mb-md">
+                    </div>
+                </div>
+            </div>
+            <table class="table table-bordered table-striped mb-none">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th style="text-align:center">Image</th>                      
+                        <th>Quantity</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each categories}}
+                    <tr class="gradeX">
+                        <td style="text-align: center; vertical-align: middle;">{{this._id}}</td>
+                        <td style="text-align: center; vertical-align: middle;">{{this.name}}</td>
+                        {{#if this.image}}
+                        <td style="width: 1000px; text-align: center;"><img style="width:10%; height:auto; " src="/assets/images/categories/{{this.image}}" alt="" srcset=""></td>
+                        {{else}}
+                        <td style="text-align: center; vertical-align: middle;">No image</td>
+                        {{/if}}
+                        <td style="text-align: center; vertical-align: middle;">{{this.quantity}}</td>
+                        <td class="actions" style="text-align: center; vertical-align: middle;">
+                            <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
+                            <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
+                            {{!-- <a href="/brands/{{this._id}}" class="on-default"><i class="fa fa-pencil"></i></a> --}}
+                            <a href="/categories/{{this._id}}/products" class="on-default"><i class="fa fa-list"></i></a>
+                            {{!-- <a data-method="DELETE" href="/brands/{{this._id}}" class="on-default remove-brand" onclick="return confirm('Are you sure to delete?')" rel="nofollow"><i class="fa fa-trash-o"></i></a> --}}
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <!-- end: page -->
+</section>

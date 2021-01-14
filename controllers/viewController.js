@@ -229,3 +229,19 @@ module.exports.getOrderProduct = async(req, res) => {
 	const items = await OrderDetail.find({orderId: orderId});
 	res.render('order-product-table', {items})
 }
+
+module.exports.getCategoryTable = catchAsync(async (req, res, next) => {
+	const categories = await Category.find();
+	for (let [index, category] of categories.entries()) {
+		categories[index].quantity = await Product.countDocuments({ categoryId: category._id })
+	}
+	res.render('category-table', { categories: categories })
+})
+
+module.exports.getProductFromCategory = async(req, res) => {
+	const categoryId = req.params.id;
+	const products = await Product.find({categoryId: categoryId});
+	res.render('product-table', {
+		products,
+	})
+}

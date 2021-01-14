@@ -15,6 +15,7 @@ router.get('/products/:id/delete',viewController.deleteProduct);
 router.route('/brand-form').get(viewController.getBrandForm).post(viewController.postBrandForm);
 router.route('/brands/:id').get(viewController.getBrand).post(viewController.postBrand).delete(viewController.deleteBrand);
 router.route('/brands/:id/products').get(viewController.getProductFromBrand)
+router.route('/categories/:id/products').get(viewController.getProductFromCategory)
 router.route('/orders/:id').get(viewController.getOrderForm).post(viewController.postOrderForm);
 router.route('/orders/:id/products').get(viewController.getOrderProduct);
 
@@ -23,6 +24,7 @@ router.get('/products', viewController.getProductTable);
 router.get('/brands', viewController.getBrandTable);
 router.get('/users', viewController.getUserTable);
 router.get('/orders', viewController.getOrderTable);
+router.get('/categories', viewController.getCategoryTable);
 
 
 module.exports = router;
