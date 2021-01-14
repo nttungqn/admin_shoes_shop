@@ -23,12 +23,16 @@ const orderSchema = new mongoose.Schema({
   // 0: Cannceled 1: Pending 2: Completed
   status: {
     type: String,
-    default: "Pending"
+    enum: ['pending', 'canceled', 'completed'],
+    default: "pending"
   }
 });
 
 orderSchema.pre(/^find/, function (next) {
-	this.createdAt = dateFormat(this.createdAt, "dS mmmm, yyyy, at h:MM TT");
+	this.populate({
+		path: 'userId',
+		select: 'email name',
+	});
 	next();
 })
 

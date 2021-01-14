@@ -5,6 +5,7 @@ const User = require('./../models/userModel')
 const Brand = require('./../models/brandModel');
 const Category = require('./../models/categoryModel');
 const Order = require('./../models/orderModel');
+const OrderDetail =  require('./../models/orderDetailModel');
 const formidable = require('formidable');
 const fs = require('fs');
 const path = require('path');
@@ -206,4 +207,25 @@ module.exports.getOrderTable = async(req, res) => {
 	res.render('order-table', {
 		orders,
 	})
+}
+
+module.exports.getOrderForm = async(req, res) => {
+	const order = await Order.findOne({_id: req.params.id});
+
+	res.render('order-form', {
+		order,
+		type: Boolean(req.flash('success')[0])
+	})
+}
+
+module.exports.postOrderForm = async(req, res)=> {
+	const order = await Order.findOneAndUpdate(req.params.id, req.body);
+	req.flash('success', 'success');
+	res.redirect(`/orders/${req.params.id}`)
+}
+
+module.exports.getOrderProduct = async(req, res) => {
+	const orderId = req.params.id;
+	const items = await OrderDetail.find({orderId: orderId});
+	res.render('order-product-table', {items})
 }

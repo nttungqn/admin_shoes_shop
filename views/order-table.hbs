@@ -52,19 +52,20 @@
                         <td>$ {{this.cart.totalPrice}}</td>
                         <td>{{formatDate 'MM/DD/YYYY' this.createdAt}}</td>
                         {{#if (eq this.status "pending")}}
-                            <td><span class="badge badge-warning">{{this.status}}</span></td>
+                            <td><span class="label label-warning">{{this.status}}</span></td>
                         {{/if}}
                         {{#if (eq this.status "cannceled")}}
-                            <td><span class="badge badge-danger">{{this.status}}</span></td>
+                            <td><span class="label label-danger">{{this.status}}</span></td>
                         {{/if}}
                         {{#if (eq this.status "completed")}}
-                            <td><span class="badge badge-canceled">{{this.status}}</span></td>
+                            <td><span class="label label-success">{{this.status}}</span></td>
                         {{/if}}
                         <td class="actions" style="text-align: center; vertical-align: middle;">
-                            <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
-                            <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
-                            <a href="/brands/{{this._id}}" class="on-default"><i class="fa fa-pencil"></i></a>
-                            <a href="/brands/{{this._id}}/products" class="on-default"><i class="fa fa-list"></i></a>
+                            {{!-- <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
+                            <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a> --}}
+                            <a href="/orders/{{this._id}}" class="on-default"><i class="fa fa-pencil"></i></a>
+                            <a href="/orders/{{this._id}}/products" class="on-default"><i class="fa fa-list"></i></a>
+                            {{!-- <a href="/orders/{{this._id}}/delete" class="on-default"><i class="fa fa-trash-o"></i></a> --}}
                             {{!-- <a data-method="DELETE" href="/brands/{{this._id}}" class="on-default remove-brand" onclick="return confirm('Are you sure to delete?')" rel="nofollow"><i class="fa fa-trash-o"></i></a> --}}
                         </td>
                     </tr>
