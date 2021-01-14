@@ -6,7 +6,8 @@ const adminController = require('../controllers/adminController')
 
 router.route('/sign-up').get(authController.getSignUp).post(authController.postSignUp);
 router.route('/sign-in').get(authController.getSignIn).post(authController.postSignIn);
-router.get('/logout', authController.logout);
+
+router.get('/logout', authController.protect, authController.logout);
 // router.route('/verify-account').get(authController.getVerifyAccount).post(authController.postVerifyAccount);
 // router.route('/send-password-reset').get(authController.getSendPasswordReset).post(authController.postSendPasswordReset);
 // router.route('/confirm-password-reset').get(authController.getConfirmPasswordReset).post(authController.postConfirmPasswordReset);

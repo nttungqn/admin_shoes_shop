@@ -17,7 +17,7 @@
     </header>
 
     <div class="row">
-        <div class="col-md-6">
+        {{!-- <div class="col-md-6">
             <section class="panel">
                 <header class="panel-heading">
                     <div class="panel-actions">
@@ -91,8 +91,8 @@
 
                 </div>
             </section>
-        </div>
-        <div class="col-md-6">
+        </div> --}}
+        {{!-- <div class="col-md-6">
             <section class="panel">
                 <header class="panel-heading">
                     <div class="panel-actions">
@@ -110,12 +110,12 @@
 
                 </div>
             </section>
-        </div>
+        </div> --}}
     </div>
 
     <!-- start: page -->
     <div class="row">
-        <div class="col-md-6 col-lg-12 col-xl-6">
+        {{!-- <div class="col-md-6 col-lg-12 col-xl-6">
             <section class="panel">
                 <div class="panel-body">
                     <div class="row">
@@ -220,7 +220,7 @@
                     </div>
                 </div>
             </section>
-        </div>
+        </div> --}}
         <div class="col-md-6 col-lg-12 col-xl-6">
             <div class="row">
                 <div class="col-md-12 col-lg-6 col-xl-6">
@@ -261,7 +261,7 @@
                                     <div class="summary">
                                         <h4 class="title">Total Profit</h4>
                                         <div class="info">
-                                            <strong class="amount">$ 14,890.30</strong>
+                                            <strong class="amount">$ {{totalProfit}}</strong>
                                         </div>
                                     </div>
                                     <div class="summary-footer">
@@ -283,9 +283,9 @@
                                 </div>
                                 <div class="widget-summary-col">
                                     <div class="summary">
-                                        <h4 class="title">Today's Orders</h4>
+                                        <h4 class="title">Total Orders</h4>
                                         <div class="info">
-                                            <strong class="amount">38</strong>
+                                            <strong class="amount">{{totalOrders}}</strong>
                                         </div>
                                     </div>
                                     <div class="summary-footer">

@@ -15,7 +15,17 @@ const USER_SERVER_URL = 'http://localhost:3000';
 
 module.exports.getOverview = catchAsync(async (req, res, next) => {
 	if (req.user) {
+		let orders = await Order.find();
+		let totalPrice = 0;
+		for (var key in orders) {
+			if (orders.hasOwnProperty(key)) {
+				totalPrice += parseFloat(orders[key].cart.totalPrice);
+			}
+		}
+		
 		res.render('index', {
+			totalOrders: orders.length,
+			totalProfit: totalPrice,
 		})
 	} else {
 		res.redirect('/sign-in')

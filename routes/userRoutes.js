@@ -4,7 +4,6 @@ const router = express.Router();
 const authController = require('../controllers/authController')
 const userController = require('../controllers/userController')
 
-router.use(authController.protect);
-router.route('/:id').get(userController.getUser).post(userController.postUser);
+router.route('/:id').get(authController.protect, userController.getUser).post(authController.protect, userController.postUser);
 
 module.exports = router;
